@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformBenchmarks", "PlatformBenchmarks\PlatformBenchmarks.csproj", "{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{DA92A637-75D0-4EA6-B052-D5F3148B093E}"
+ProjectSection(SolutionItems) = preProject
+	NuGet.config = NuGet.config
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

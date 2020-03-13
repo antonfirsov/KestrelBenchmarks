@@ -38,10 +38,9 @@ namespace PlatformBenchmarks
                         builder.UseHttpApplication<BenchmarkApplication>();
                     });
                 })
-                .UseStartup<Startup>()
-                .Build();
+                .UseStartup<Startup>();
 
-            return host;
+            return host.Build();
         }
     }
 }
