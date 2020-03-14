@@ -1,0 +1,30 @@
+{
+  "Default": {
+    "Client": "Wrk",
+    "Source": {
+      "Repository": "https://github.com/antonfirsov/KestrelBenchmarks.git",
+      "BranchOrCommit": "master",
+      "Project": "PlatformBenchmarks/PlatformBenchmarks.csproj"
+    }
+  },
+  "PlaintextPlatform": {
+    "PresetHeaders": "Plaintext",
+    "ClientProperties": {
+      "ScriptName": "pipeline",
+      "PipelineDepth": 16
+    },
+    "Path": "/plaintext"
+  },
+  "PlaintextNonPipelinedPlatform": {
+    "PresetHeaders": "Plaintext",
+    "Path": "/plaintext",
+    "ClientProperties": {
+      "ScriptName": "",
+      "PipelineDepth": 0
+    }
+  },
+  "JsonPlatform": {
+    "PresetHeaders": "Json",
+    "Path": "/json"
+  }
+}
