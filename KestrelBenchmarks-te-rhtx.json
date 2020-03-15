@@ -1,0 +1,35 @@
+{
+  "Default": {
+    "Client": "Wrk",
+    "Source": {
+      "Repository": "https://github.com/antonfirsov/KestrelBenchmarks.git",
+      "BranchOrCommit": "master",
+      "DockerFile": "te/aspcore-rhtx.dockerfile",
+      "DockerImageName": "aspnetcore_rhtx",
+      "DockerContextDirectory": "te"
+    },
+
+    "Client": "Wrk",
+    "ReadyStateText": "Application started."
+  },
+  "PlaintextPlatform": {
+    "PresetHeaders": "Plaintext",
+    "ClientProperties": {
+      "ScriptName": "pipeline",
+      "PipelineDepth": 16
+    },
+    "Path": "/plaintext"
+  },
+  "PlaintextNonPipelinedPlatform": {
+    "PresetHeaders": "Plaintext",
+    "Path": "/plaintext",
+    "ClientProperties": {
+      "ScriptName": "",
+      "PipelineDepth": 0
+    }
+  },
+  "JsonPlatform": {
+    "PresetHeaders": "Json",
+    "Path": "/json"
+  }
+}
