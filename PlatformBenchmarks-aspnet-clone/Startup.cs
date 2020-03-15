@@ -7,6 +7,7 @@ using System.IO.Pipelines;
 using IoUring.Transport;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RedHat.AspNetCore.Server.Kestrel.Transport.Linux;
@@ -15,7 +16,7 @@ namespace PlatformBenchmarks
 {
     internal enum KestrelTransport
     {
-        Default,
+        Sockets,
         IoUringTransport,
         LinuxTransport
     }
@@ -38,39 +39,7 @@ namespace PlatformBenchmarks
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            KestrelTransport kestrelTransport = 
-                Configuration.GetValue("KestrelTransport", KestrelTransport.Default);
-            ApplicationSchedulingMode schedulingMode =
-                Configuration.GetValue("ApplicationSchedulingMode",
-                    ApplicationSchedulingMode.Default);
-            
-            switch (kestrelTransport)
-            {
-                
-                case KestrelTransport.IoUringTransport:
-                    Console.WriteLine($"Setting IoUringTransport");
-                    services.AddIoUringTransport(options =>
-                    {
-                        if (schedulingMode == ApplicationSchedulingMode.Inline)
-                        {
-                            Console.WriteLine("Setting PipeScheduler.Inline");
-                            options.ApplicationSchedulingMode = PipeScheduler.Inline;    
-                        }
-                    });
-                    break;
-                case KestrelTransport.LinuxTransport:
-                    Console.WriteLine($"Setting LinuxTransport");
-                    services.AddSingleton<IConnectionListenerFactory, LinuxTransportFactory>();
-                    services.Configure<LinuxTransportOptions>(options =>
-                    {
-                        if (schedulingMode == ApplicationSchedulingMode.Inline)
-                        {
-                            Console.WriteLine("Setting PipeScheduler.Inline");
-                            options.ApplicationSchedulingMode = PipeScheduler.Inline;    
-                        }
-                    });
-                    break;
-            }
+           
         }
         
         public void Configure(IApplicationBuilder app)

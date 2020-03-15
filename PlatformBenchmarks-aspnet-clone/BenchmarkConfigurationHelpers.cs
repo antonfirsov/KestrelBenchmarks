@@ -2,10 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.IO.Pipelines;
 using System.Net;
+using IoUring.Transport;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using RedHat.AspNetCore.Server.Kestrel.Transport.Linux;
 
 namespace PlatformBenchmarks
 {
@@ -15,27 +21,75 @@ namespace PlatformBenchmarks
         {
             builder.UseConfiguration(configuration);
 
-            // Handle the transport type
-            var webHost = builder.GetSetting("KestrelTransport");
+            // Handle the transport settings
+            builder.ConfigureServices(services => services.ConfigureTransport(configuration));
+            return builder;
+        }
 
-            // Handle the thread count
-            var threadCountRaw = builder.GetSetting("threadCount");
+        public static void ConfigureTransport(this IServiceCollection services, IConfiguration configuration)
+        {
+             KestrelTransport kestrelTransport = 
+                configuration.GetValue("KestrelTransport", KestrelTransport.Sockets);
+            ApplicationSchedulingMode schedulingMode =
+                configuration.GetValue("ApplicationSchedulingMode",
+                    ApplicationSchedulingMode.Default);
+            
+            var threadCountRaw = configuration.GetValue<string>("threadCount");
             int? theadCount = null;
-
+            
             if (!string.IsNullOrEmpty(threadCountRaw) && Int32.TryParse(threadCountRaw, out var value))
             {
                 theadCount = value;
             }
-
-            builder.UseSockets(options =>
+            
+            switch (kestrelTransport)
             {
-                if (theadCount.HasValue)
-                {
-                    options.IOQueueCount = theadCount.Value;
-                }
-            });
-
-            return builder;
+                case KestrelTransport.IoUringTransport:
+                    Console.WriteLine($"Setting IoUringTransport");
+                    services.AddIoUringTransport(options =>
+                    {
+                        if (schedulingMode == ApplicationSchedulingMode.Inline)
+                        {
+                            Console.WriteLine("Setting PipeScheduler.Inline");
+                            options.ApplicationSchedulingMode = PipeScheduler.Inline;
+                        }
+                        if (theadCount.HasValue)
+                        {
+                            Console.WriteLine($"Setting ThreadCount={theadCount.Value}");
+                            options.ThreadCount = theadCount.Value;
+                        }
+                    });
+                    break;
+                case KestrelTransport.LinuxTransport:
+                    Console.WriteLine($"Setting LinuxTransport");
+                    services.AddSingleton<IConnectionListenerFactory, LinuxTransportFactory>();
+                    services.Configure<LinuxTransportOptions>(options =>
+                    {
+                        if (schedulingMode == ApplicationSchedulingMode.Inline)
+                        {
+                            Console.WriteLine("Setting PipeScheduler.Inline");
+                            options.ApplicationSchedulingMode = PipeScheduler.Inline;    
+                        }
+                        if (theadCount.HasValue)
+                        {
+                            Console.WriteLine($"Setting ThreadCount={theadCount.Value}");
+                            options.ThreadCount = theadCount.Value;
+                        }
+                    });
+                    break;
+                default:
+                    Console.WriteLine("Using Socket Transport");
+                    services.AddSingleton<IConnectionListenerFactory, SocketTransportFactory>();
+                    services.Configure<SocketTransportOptions>(options =>
+                    {
+                        if (theadCount.HasValue)
+                        {
+                            Console.WriteLine($"Setting ThreadCount={theadCount.Value}");
+                            options.IOQueueCount = theadCount.Value;
+                        }
+                    });
+                    break;
+            }
         }
 
         public static IPEndPoint CreateIPEndPoint(this IConfiguration config)
