@@ -15,6 +15,19 @@ using RedHat.AspNetCore.Server.Kestrel.Transport.Linux;
 
 namespace PlatformBenchmarks
 {
+    internal enum Transport
+    {
+        Sockets,
+        IoUringTransport,
+        LinuxTransport
+    }
+
+    internal enum ApplicationSchedulingMode
+    {
+        Default,
+        Inline
+    }
+    
     public static class BenchmarkConfigurationHelpers
     {
         public static IWebHostBuilder UseBenchmarksConfiguration(this IWebHostBuilder builder, IConfiguration configuration)
@@ -28,8 +41,8 @@ namespace PlatformBenchmarks
 
         public static void ConfigureTransport(this IServiceCollection services, IConfiguration configuration)
         {
-             KestrelTransport kestrelTransport = 
-                configuration.GetValue("KestrelTransport", KestrelTransport.Sockets);
+             Transport transport = 
+                configuration.GetValue("KestrelTransport", Transport.Sockets);
             ApplicationSchedulingMode schedulingMode =
                 configuration.GetValue("ApplicationSchedulingMode",
                     ApplicationSchedulingMode.Default);
@@ -42,9 +55,9 @@ namespace PlatformBenchmarks
                 theadCount = value;
             }
             
-            switch (kestrelTransport)
+            switch (transport)
             {
-                case KestrelTransport.IoUringTransport:
+                case Transport.IoUringTransport:
                     Console.WriteLine($"Setting IoUringTransport");
                     services.AddIoUringTransport(options =>
                     {
@@ -60,7 +73,7 @@ namespace PlatformBenchmarks
                         }
                     });
                     break;
-                case KestrelTransport.LinuxTransport:
+                case Transport.LinuxTransport:
                     Console.WriteLine($"Setting LinuxTransport");
                     services.AddSingleton<IConnectionListenerFactory, LinuxTransportFactory>();
                     services.Configure<LinuxTransportOptions>(options =>

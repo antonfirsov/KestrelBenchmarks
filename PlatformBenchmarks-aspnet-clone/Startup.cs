@@ -14,19 +14,6 @@ using RedHat.AspNetCore.Server.Kestrel.Transport.Linux;
 
 namespace PlatformBenchmarks
 {
-    internal enum KestrelTransport
-    {
-        Sockets,
-        IoUringTransport,
-        LinuxTransport
-    }
-
-    internal enum ApplicationSchedulingMode
-    {
-        Default,
-        Inline
-    }
-    
     public class Startup
     {
         public Startup(IConfiguration configuration)
