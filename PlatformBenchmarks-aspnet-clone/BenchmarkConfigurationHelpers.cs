@@ -42,9 +42,9 @@ namespace PlatformBenchmarks
         public static void ConfigureTransport(this IServiceCollection services, IConfiguration configuration)
         {
              Transport transport = 
-                configuration.GetValue("KestrelTransport", Transport.Sockets);
+                configuration.GetValue(nameof(Transport), Transport.Sockets);
             ApplicationSchedulingMode schedulingMode =
-                configuration.GetValue("ApplicationSchedulingMode",
+                configuration.GetValue(nameof(ApplicationSchedulingMode),
                     ApplicationSchedulingMode.Default);
             
             var threadCountRaw = configuration.GetValue<string>("threadCount");
