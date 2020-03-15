@@ -13,11 +13,17 @@ using RedHat.AspNetCore.Server.Kestrel.Transport.Linux;
 
 namespace PlatformBenchmarks
 {
-    internal enum Transport
+    internal enum KestrelTransport
     {
         Default,
-        URing,
+        IoUringTransport,
         LinuxTransport
+    }
+
+    internal enum ApplicationSchedulingMode
+    {
+        Default,
+        Inline
     }
     
     public class Startup
@@ -32,20 +38,36 @@ namespace PlatformBenchmarks
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Transport transport = Configuration.GetValue<Transport>("transport", Transport.Default);
+            KestrelTransport kestrelTransport = 
+                Configuration.GetValue("KestrelTransport", KestrelTransport.Default);
+            ApplicationSchedulingMode schedulingMode =
+                Configuration.GetValue("ApplicationSchedulingMode",
+                    ApplicationSchedulingMode.Default);
             
-            switch (transport)
+            switch (kestrelTransport)
             {
-                case Transport.URing:
+                
+                case KestrelTransport.IoUringTransport:
                     Console.WriteLine($"Setting IoUringTransport");
-                    services.AddIoUringTransport();
+                    services.AddIoUringTransport(options =>
+                    {
+                        if (schedulingMode == ApplicationSchedulingMode.Inline)
+                        {
+                            Console.WriteLine("Setting PipeScheduler.Inline");
+                            options.ApplicationSchedulingMode = PipeScheduler.Inline;    
+                        }
+                    });
                     break;
-                case Transport.LinuxTransport:
+                case KestrelTransport.LinuxTransport:
                     Console.WriteLine($"Setting LinuxTransport");
                     services.AddSingleton<IConnectionListenerFactory, LinuxTransportFactory>();
                     services.Configure<LinuxTransportOptions>(options =>
                     {
-                        options.ApplicationSchedulingMode = PipeScheduler.Inline;
+                        if (schedulingMode == ApplicationSchedulingMode.Inline)
+                        {
+                            Console.WriteLine("Setting PipeScheduler.Inline");
+                            options.ApplicationSchedulingMode = PipeScheduler.Inline;    
+                        }
                     });
                     break;
             }
