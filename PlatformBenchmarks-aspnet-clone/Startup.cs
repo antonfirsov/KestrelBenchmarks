@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO.Pipelines;
 using IoUring.Transport;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Connections;
@@ -42,6 +43,10 @@ namespace PlatformBenchmarks
                 case Transport.LinuxTransport:
                     Console.WriteLine($"Setting LinuxTransport");
                     services.AddSingleton<IConnectionListenerFactory, LinuxTransportFactory>();
+                    services.Configure<LinuxTransportOptions>(options =>
+                    {
+                        options.ApplicationSchedulingMode = PipeScheduler.Inline;
+                    });
                     break;
             }
         }
