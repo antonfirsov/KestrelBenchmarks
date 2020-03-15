@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformBenchmarks-aspnet-clone", "PlatformBenchmarks-aspnet-clone\PlatformBenchmarks-aspnet-clone.csproj", "{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformBenchmarks", "PlatformBenchmarks\PlatformBenchmarks.csproj", "{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{DA92A637-75D0-4EA6-B052-D5F3148B093E}"
 ProjectSection(SolutionItems) = preProject
 	NuGet.config = NuGet.config
 EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "te", "te", "{5E3E13ED-A66C-46D0-A197-DBB5B8E489F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlatformBenchmarks", "te\PlatformBenchmarks\PlatformBenchmarks.csproj", "{775905DF-A7E7-4C46-B55B-FEE15A07AE10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,12 +17,7 @@ Global
 		{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{775905DF-A7E7-4C46-B55B-FEE15A07AE10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{775905DF-A7E7-4C46-B55B-FEE15A07AE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{775905DF-A7E7-4C46-B55B-FEE15A07AE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{775905DF-A7E7-4C46-B55B-FEE15A07AE10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{775905DF-A7E7-4C46-B55B-FEE15A07AE10} = {5E3E13ED-A66C-46D0-A197-DBB5B8E489F2}
 	EndGlobalSection
 EndGlobal
