@@ -8,7 +8,7 @@
       "DockerImageName": "aspnetcore_rhtx",
       "DockerContextDirectory": "te"
     },
-
+    "Port": 8080,
     "Client": "Wrk",
     "ReadyStateText": "Application started."
   },
