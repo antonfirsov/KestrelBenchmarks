@@ -4,7 +4,7 @@
     "Source": {
       "Repository": "https://github.com/antonfirsov/KestrelBenchmarks.git",
       "BranchOrCommit": "master",
-      "Project": "PlatformBenchmarks-aspnet-clone/PlatformBenchmarks.csproj"
+      "Project": "PlatformBenchmarks/PlatformBenchmarks.csproj"
     }
   },
   "PlaintextPlatform": {

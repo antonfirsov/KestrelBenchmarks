@@ -81,7 +81,7 @@ namespace PlatformBenchmarks
                         if (schedulingMode == ApplicationSchedulingMode.Inline)
                         {
                             Console.WriteLine("Setting PipeScheduler.Inline");
-                            options.ApplicationSchedulingMode = PipeScheduler.Inline;    
+                            options.ApplicationSchedulingMode = PipeScheduler.Inline;
                         }
                         if (theadCount.HasValue)
                         {
