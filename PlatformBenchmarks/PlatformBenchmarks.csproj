@@ -16,7 +16,10 @@
     <FrameworkReference Update="Microsoft.NETCore.App" RuntimeFrameworkVersion="$(MicrosoftNETCoreAppPackageVersion)" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="IoUring.Transport" Version="0.1.0-1583948777" />
+<!--    <PackageReference Include="IoUring.Transport" Version="0.1.0-1583948777" />-->
     <PackageReference Include="RedHat.AspNetCore.Server.Kestrel.Transport.Linux" Version="3.0.0-191007-1144" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IoUring.Transport\src\IoUring.Transport\IoUring.Transport.csproj" />
   </ItemGroup>
 </Project>

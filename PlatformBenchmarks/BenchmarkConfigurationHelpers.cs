@@ -101,6 +101,7 @@ namespace PlatformBenchmarks
                             options.IOQueueCount = theadCount.Value;
                         }
                     });
+                    
                     break;
             }
         }

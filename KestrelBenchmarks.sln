@@ -7,6 +7,8 @@ ProjectSection(SolutionItems) = preProject
 	NuGet.config = NuGet.config
 EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoUring.Transport", "IoUring.Transport\src\IoUring.Transport\IoUring.Transport.csproj", "{886A39B2-D51C-4D95-A96B-1184164B3D80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F8C5B61-9CA0-4868-AD97-B35071CBEDBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{886A39B2-D51C-4D95-A96B-1184164B3D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{886A39B2-D51C-4D95-A96B-1184164B3D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{886A39B2-D51C-4D95-A96B-1184164B3D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{886A39B2-D51C-4D95-A96B-1184164B3D80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
